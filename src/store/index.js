@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
+let inCart = window.localStorage.getItem('inCart');
 
 export default new Vuex.Store({
   state: {
     //{id: , quantity:}
-    inCart: [],
+    inCart: inCart ? JSON.parse(inCart) : [],
     prodcuts: [
       {
         id: '11',
@@ -60,20 +61,24 @@ export default new Vuex.Store({
       } else {
         context.commit('INCREMENT_ITEM_QUANTITY', cartItem)
       }
+      context.commit('SAVE_CART');
     },     
     removeFromCart(context, index) {   
       context.commit('REMOVE_FROM_CART', index);
+      context.commit('SAVE_CART');
     },
     decrementItems(context, product) {
       if(product.quantity > 1) {
         const cartItem = context.state.inCart.find(item => item.id === product.id)
         if(cartItem){
           context.commit('DECREMENT_ITEM_QUANTITY', cartItem);
+          context.commit('SAVE_CART');
         } 
       }
     },
     clearCart(context, lenght) {   
       context.commit('REMOVE_ALL_CART', lenght);
+      context.commit('SAVE_CART');
     }
   },
   mutations: {
@@ -94,6 +99,9 @@ export default new Vuex.Store({
     },
     REMOVE_ALL_CART(state, lenght) {
       state.inCart.splice(0, lenght)
+    },
+    SAVE_CART(state) {
+      window.localStorage.setItem('inCart', JSON.stringify(state.inCart));
     }
   },
   getters: {
