@@ -1,5 +1,9 @@
 # vue-shoping-cart
 
+A simple shoping cart based on Vue.
+- You can to change quantity of the goods in your cart;
+- Save items in the Cart on reloading;
+
 ## Project setup
 ```
 npm install
@@ -14,11 +18,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
